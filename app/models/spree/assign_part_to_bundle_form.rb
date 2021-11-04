@@ -6,6 +6,7 @@ module Spree
 
     attr_reader :product, :part_options
 
+    # part_options must be a hash with :count, :part_id, :assembly_id, :variant_selection_deferred
     def initialize(product, part_options)
       @product = product
       @part_options = part_options

@@ -57,7 +57,8 @@ module Spree
       variant.parts_variants.map do |part_variant|
         selected_variants = options[:selected_variants]
         variant_id = variant_id_for(part_variant, selected_variants)
-        qty = part_variant.count * quantity
+        puts "*** CGA quantity class: #{quantity.class}, value: #{quantity}"
+        qty = part_variant.count * quantity.to_i
 
         # uses add_to_line_item to ensure any other extensions overriding that method
         # are also triggered and to ensure items are matched to existing cart items
