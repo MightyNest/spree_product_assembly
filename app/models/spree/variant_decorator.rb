@@ -18,7 +18,7 @@ Spree::Variant.class_eval do
   def total_assemblies_available
     if is_master? && product.has_variants?
       # total avail is the sum of all variants on the master's product
-      product.variants.map { |v| v.total_assemblies_available }.sum
+      product.variants.map { |v| v.total_assemblies_available.to_i }.sum
     else
       # for a variant, the total available is bottlenecked by the least available part
       parts_variants.map(&:total_assemblies_available).min
