@@ -1,18 +1,20 @@
-Spree::Product.class_eval do
-  has_many :assemblies_parts, through: :variants_including_master,
-           source: :parts_variants
-  has_many :parts, through: :assemblies_parts
+module Spree::ProductDecorator
+  def self.prepended(base)
+    base.has_many :assemblies_parts, through: :variants_including_master,
+            source: :parts_variants
+    base.has_many :parts, through: :assemblies_parts
 
-  scope :individual_saled, -> { where(individual_sale: true) }
+    base.scope :individual_saled, -> { where(individual_sale: true) }
 
-  scope :search_can_be_part, ->(query){ not_deleted.joins(:master)
-    .where(arel_table["name"].matches("%#{query}%").or(Spree::Variant.arel_table["sku"].matches("%#{query}%")))
-    .where(can_be_part: true)
-    .limit(30)
-  }
+    base.scope :search_can_be_part, ->(query){ not_deleted.available.joins(:master)
+      .where(arel_table["name"].matches("%#{query}%").or(Spree::Variant.arel_table["sku"].matches("%#{query}%")))
+      .where(can_be_part: true)
+      .limit(30)
+    }
 
-  validate :assembly_cannot_be_part, if: :assembly?
-  delegate :total_assemblies_available, to: :master
+    base.validate :assembly_cannot_be_part, if: :assembly?
+    base.delegate :total_assemblies_available, to: :master
+  end
 
   def variants_or_master
     has_variants? ? variants : [master]
@@ -37,3 +39,5 @@ Spree::Product.class_eval do
     Spree::AssembliesPart.get(self.id, variant.id)
   end
 end
+
+Spree::Product.prepend Spree::ProductDecorator
