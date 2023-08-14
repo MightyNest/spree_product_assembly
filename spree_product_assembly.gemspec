@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_product_assembly'
-  s.version     = '3.3.0'
+  s.version     = '3.3.1'
   s.summary     = 'Adds oportunity to make bundle of products to your Spree store'
   s.description = s.summary
   s.required_ruby_version = '>= 2.1.0'
@@ -29,7 +29,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pg', '~> 0.18'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'sass-rails'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'mysql2'
