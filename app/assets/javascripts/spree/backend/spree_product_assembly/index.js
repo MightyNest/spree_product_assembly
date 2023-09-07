@@ -1,7 +1,7 @@
 //= require ./translations
 
 (function () {
-  document.documentElement.addEventListener("turbo:load", (e) => {
+  $(document).ready(function() {
     var makePostRequest,
       partsTable,
       searchForParts,
